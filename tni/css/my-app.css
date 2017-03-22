@@ -1,0 +1,63 @@
+.navbar-inner .center {
+	margin: auto;
+}
+
+.material-icons.md-18 {
+	font-size: 18px;
+}
+
+.material-icons.md-24 {
+	font-size: 24px;
+}
+
+.material-icons.md-36 {
+	font-size: 36px;
+}
+
+.material-icons.md-48 {
+	font-size: 48px;
+}
+
+
+/* Rules for using icons as black on a light background. */
+
+.material-icons.md-dark {
+	color: rgba(0, 0, 0, 0.54);
+}
+
+.material-icons.md-dark.md-inactive {
+	color: rgba(0, 0, 0, 0.26);
+}
+
+
+/* Rules for using icons as white on a dark background. */
+
+.material-icons.md-light {
+	color: rgba(255, 255, 255, 1);
+}
+
+.material-icons.md-light.md-inactive {
+	color: rgba(255, 255, 255, 0.3);
+}
+
+
+/* Rules for using icons as signature blueish on a dark background. */
+
+.material-icons.md-blue {
+	color: rgba(33, 150, 243, 1);
+}
+
+.material-icons.md-blue.md-inactive {
+	color: rgba(33, 150, 243, 0.3);
+}
+
+.material-icons.right {
+	position: relative;
+	float: right;
+	left: -10px;
+	top: -6px;
+}
+
+.open-popover {
+	margin-bottom: -32px;
+}
