@@ -12,41 +12,108 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true
 });
 
-// Callbacks to run specific code for specific pages, for example for About page:
-myApp.onPageInit('about', function (page) {
-    // run createContentPage func after link was clicked
-    $$('.create-page').on('click', function () {
-        createContentPage();
-    });
-});
-
-// Generate dynamic page
-var dynamicPageIndex = 0;
-function createContentPage() {
-	mainView.router.loadContent(
-        '<!-- Top Navbar-->' +
-        '<div class="navbar">' +
-        '  <div class="navbar-inner">' +
-        '    <div class="left"><a href="#" class="back link"><i class="icon icon-back"></i><span>Back</span></a></div>' +
-        '    <div class="center sliding">Dynamic Page ' + (++dynamicPageIndex) + '</div>' +
-        '  </div>' +
-        '</div>' +
-        '<div class="pages">' +
-        '  <!-- Page, data-page contains page name-->' +
-        '  <div data-page="dynamic-pages" class="page">' +
-        '    <!-- Scrollable page content-->' +
-        '    <div class="page-content">' +
-        '      <div class="content-block">' +
-        '        <div class="content-block-inner">' +
-        '          <p>Here is a dynamic page created on ' + new Date() + ' !</p>' +
-        '          <p>Go <a href="#" class="back">back</a> or go to <a href="services.html">Services</a>.</p>' +
-        '        </div>' +
-        '      </div>' +
-        '    </div>' +
-        '  </div>' +
-        '</div>'
-    );
-	return;
-}
-
 //FORM FUNCTIONS
+var sex = function () {
+    return $$("input[name='sex']:checked").val();
+};
+var tniLow = function () {
+    if (sex() === "m") {
+        return 35;
+    }
+    if (sex() === "f") {
+        return 16;
+    }
+};
+var tniHigh = function () {
+    if (sex() === "m") {
+        return 105;
+    }
+    if (sex() === "f") {
+        return 48;
+    }
+};
+var tniVal = function () {
+    return parseInt($$("input[name='hstnival']").val());
+};
+var tniScore = function () {
+    if (tniVal() >= tniHigh()) {
+        return 2;
+    } else if (tniVal() < tniLow()) {
+        return 0;
+    } else {
+        return 1;
+    }
+};
+var painVal = function () {
+    if ($$("input[name='pain-box']:checked").length > 0) {
+        return $$("input[name='pain-box']:checked").length - 1;
+    } else {
+        return 0;
+    }
+};
+
+var riskVal = function () {
+    if ($$("input[name='risk-box']:checked").val() === "2") {
+        return 2;
+    } else if ($$("input[name='risk-box']:checked").length === 0) {
+        return 0;
+    } else if ($$("input[name='risk-box']:checked").length <= 2) {
+        return 1;
+    } else {
+        return 2;
+    }
+};
+
+function checkForm() {
+    var heartscore = 0;
+    heartscore = tniScore() + parseInt($$("input[name='age']:checked").val()) + painVal() + parseInt($$("input[name='age']:checked").val() + riskVal());
+    if (heartscore < 4) {
+        //LOW RISK
+        $$("p.first").html("HEART score " + heartscore + " - Låg risk");
+        if (tniVal() < 5) {
+            $$(".bottom-toolbar").css("background", "#00c853");
+            $$("p.second").html("AKS ej sannolikt");
+            //Not probable
+        } else if (tniVal() >= 5 && tniVal() < tniLow()) {
+            $$(".bottom-toolbar").css("background", "#fbc02d");
+            $$("p.second").html("Tag 1h-prov, om &Delta; < 6 AKS ej sannolikt, om &Delta; > 6 handlägg som AKS");
+            //New test 1h, Delta below 6 not probable, over 6 treat as AKS
+        } else if (tniVal() >= tniLow()) {
+            $$(".bottom-toolbar").css("background", "#f57c00");
+            $$("p.second").html("Stämmer symptomen? Dynamik? Diskutera med medicinjour/kardiologjour? - AKS?");
+            //Contact medicine cardio - AKS?
+        }
+    } else if (heartscore >= 4 && heartscore <= 7) {
+        //INTERMEDIATE
+        $$("p.first").html("HEART score " + heartscore + " - Intermediär risk");
+        if (tniVal() < tniLow()) {
+            $$(".bottom-toolbar").css("background", "#f57c00");
+            $$("p.second").html("Tag 3h-prov, dynamik? Högriskpatient!");
+            //New test 3h, dynamic? High risk patient!
+        } else if (tniVal() >= tniLow()) {
+            $$(".bottom-toolbar").css("background", "#ff3d00");
+            $$("p.second").html("Handlägg som AKS om ej annan diagnos mer sannolik!");
+            //AKS!
+        }
+    } else if (heartscore >= 8) {
+        //HIGH
+        $$("p.first").html("HEART score " + heartscore + " - Hög risk");
+        if (tniVal() < tniLow()) {
+            //New test 3h, dynamic? High risk patient!
+            $$(".bottom-toolbar").css("background", "#f57c00");
+            $$("p.second").html("Tag 3h-prov, dynamik? Högriskpatient!");
+        } else if (tniVal() >= tniLow()) {
+            //AKS!
+            $$(".bottom-toolbar").css("background", "#ff3d00");
+            $$("p.second").html("Handlägg som AKS om ej annan diagnos mer sannolik!");
+        }
+    }
+    if (heartscore > 0 && tniVal() > -1) {
+        $$(".bottom-toolbar").show();
+    } else if (tniVal() > -1 && sex() && $$("input[name='age']:checked").val() && $$("input[name='ecg']:checked").val()) {
+        $$(".bottom-toolbar").show();
+    }
+}
+$$('form').change(function () {
+    checkForm();
+});
