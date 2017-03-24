@@ -64,6 +64,8 @@ var riskVal = function () {
     }
 };
 
+var myKeypad = $$('input[type="numpad"]')[0].f7Keypad;
+
 function checkForm() {
     var heartscore = 0;
     heartscore = tniScore() + parseInt($$("input[name='age']:checked").val()) + painVal() + parseInt($$("input[name='ecg']:checked").val()) + riskVal();
@@ -115,5 +117,21 @@ function checkForm() {
     }
 }
 $$('form').change(function () {
+    $$("input[name='storetime']").val(new Date().getTime());
     checkForm();
 });
+
+if (parseInt((new Date().getTime()) - parseInt($$("input[name='storetime']").val())) > 300000) {
+    document.getElementById("hstniform").reset();
+    myApp.formDeleteData('hstniform');
+    $$("input[name='hstnival']").val('');
+    myKeypad.setValue('');
+}
+
+function clearForm() {
+    document.getElementById("hstniform").reset();
+    myApp.formDeleteData('hstniform');
+    $$("input[name='hstnival']").val('');
+    myKeypad.setValue('');
+    $$(".page-content").scrollTop(0, 500);
+}

@@ -44,7 +44,7 @@
         <div data-page="form" class="page">
           <!-- Scrollable page content-->
           <div class="page-content">
-            <form id="hstniform">
+            <form id="hstniform" class="store-data">
               <br><br>
               <div class="content-block-title">Kön</div>
               <div class="list-block">
@@ -320,9 +320,28 @@
       </label>
                   </li>
                 </ul>
+                <div class="popover popover-risk">
+                  <div class="popover-angle"></div>
+                  <div class="popover-inner">
+                    <div class="content-block">
+                      <p>Om riskfaktorer</p>
+                      <p>Om tidigare känd aterosklerotisk sjukdom ges 2 poäng</p>
+                      <p>I övrigt<br>1-2 Kriterier ger ett poäng<br>&#8805;3 Kriterier ger 2 poäng</p>
+                    </div>
+                  </div>
+                </div>
               </div>
+              <input type="hidden" name="storetime" />
             </form>
-            <br><br><br><br>
+            <br><br>
+            <div class="row">
+              <div class="col-25">
+              </div>
+              <div class="col-50">
+                <a class="button button-big button-fill button-raised color-red" href="javascript:clearForm();">Rensa</a> </div>
+              <div class="col-25">
+              </div>
+            </div><br><br><br>
           </div>
           <!-- Bottom Toolbar-->
           <div class="bottom-toolbar toolbar">
@@ -341,11 +360,15 @@
             sensitiveten (även om den också är mycket hög) utan istället på den analytiska sensitivteten.</p>
           <p>HsTni kan med en mycket hög säkerhet känna av mycket låga koncentrationer av troponiner med mycket stor reproducerbarhet,
             den analytiska variabiliteten är således mycket låg (till skillnad från många labprover där den analytiska variabiliteten
-            kan gå mot 10%).</p>
+            kan gå mot 10%). Det bör dock observeras att vid mycket små &Delta;-värden börjar man närma sig den analytiska
+            variabiliteten.
+          </p>
           <p>I kliniskt bruk innebär denna känslighet att flödet kring patienter som söker för bröstsmärta måste stöpas om.
             Det här verktyget är framtaget efter en modell från Akademiska Sjukhuset i Uppsala där man genom en anpassad
             HEART-score delar upp patienter i hög respektive låg risk och utifrån det stratifierar baserat på troponinvärde
             (som även tas i beaktning i HEART score).</p>
+          <p>Detta verktyg är framtaget för HsTnI-metoden Abbot ARCHITECT HighSensitivity Troponin I med de referensintervall
+            som gäller för Västmanland.</p>
           <p>Varken detta verktyg eller det flödesschema som ligger till grund för det kan ersätta en läkares bedömning utan
             finns till som ett hjälpmedel i hanteringen av dessa patienter.</p>
           <p><a href="#" class="close-popup">Stäng</a></p>
