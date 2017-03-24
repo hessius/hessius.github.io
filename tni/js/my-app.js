@@ -66,7 +66,7 @@ var riskVal = function () {
 
 function checkForm() {
     var heartscore = 0;
-    heartscore = tniScore() + parseInt($$("input[name='age']:checked").val()) + painVal() + parseInt($$("input[name='age']:checked").val() + riskVal());
+    heartscore = tniScore() + parseInt($$("input[name='age']:checked").val()) + painVal() + parseInt($$("input[name='ecg']:checked").val()) + riskVal();
     if (heartscore < 4) {
         //LOW RISK
         $$("p.first").html("HEART score " + heartscore + " - Låg risk");
